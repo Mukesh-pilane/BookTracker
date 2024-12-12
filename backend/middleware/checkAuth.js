@@ -19,7 +19,6 @@ module.exports = async (req, res, next)=> {
             return response.unauthorized(res);
         }
 
-        // first check if the token is present in redis cache
         const redisToken = await client.get(token);
         const decode = jwt.verify(token, process.env.PRIVATE_KEY);
 
@@ -33,7 +32,7 @@ module.exports = async (req, res, next)=> {
                     return response.noData(res);
                 };
                 req.userData = {id : userData.id, email : userData.email };
-                next();
+                return next();
             } 
             else {
               console.log("Invalid token in Redis");
