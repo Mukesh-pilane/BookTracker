@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 
-const validateBook = [
+const createBookValidator = [
     body("categoryId")
         .notEmpty().withMessage("categoryId is required.")
         .bail()
@@ -25,4 +25,4 @@ const validateBook = [
     }
 ];
 
-module.exports = validateBook;
+module.exports = createBookValidator;

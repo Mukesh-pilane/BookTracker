@@ -44,7 +44,9 @@ exports.loginservice = async (logInData) => {
     return {
         error: false,
         message: "Logged In Successfully",
-        data: token
+        data: {
+            authToken:token
+        }
     }
 }
 
