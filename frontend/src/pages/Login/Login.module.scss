@@ -1,0 +1,21 @@
+@import "../../assets/variables/variables";
+
+.loginContainer {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    .left {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .right {
+        flex: 1;
+        padding: 20px;
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+    }
+}
