@@ -1,0 +1,27 @@
+@import "../../../assets/variables/variables";
+.button {
+  background-color: $primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 90px;
+  width: 100%;
+  font-family: $font-family-inter;
+  font-weight: 500;
+}
+.button2 {
+  background-color: $cancel-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 90px;
+  width: 100%;
+  font-family: $font-family-inter;
+  font-weight: 500;
+}

@@ -1,0 +1,22 @@
+@import "../../../assets/variables/variables";
+.error {
+  position: absolute;
+  top: 54px;
+  color: red;
+  left: 5px;
+  font-family: $font-poppins;
+  font-size: 11px;
+  font-weight: 500;
+}
+.onboard{
+  top: 44px;
+}
+.error2 {
+  position: absolute;
+  top: 24px;
+  color: red;
+  left: 5px;
+  font-family: $font-poppins;
+  font-size: 11px;
+  font-weight: 500;
+}

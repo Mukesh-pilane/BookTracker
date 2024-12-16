@@ -20,6 +20,7 @@ exports.loginservice = async (logInData) => {
     };
     const validPassword = await bcrypt.compare(password + "", userExist.password);
     if (!validPassword) {
+        console.log(new ValidationError('Invalid Email or Password'))
         throw new ValidationError('Invalid Email or Password');
     }
 

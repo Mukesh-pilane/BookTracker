@@ -41,7 +41,7 @@ const responseErrorHandler = (error) => {
 
   if (error.response) {
     const { status, data:{ message } } = error.response
-
+    console.log('error', error)
     switch (status) {
       case 401:
         showErrorNotification("Token Expired! Please Login again")
