@@ -31,6 +31,7 @@ const schema = yup.object().shape({
 const Login = () => {
   
   const { user, login, loading, error } = useAuthStore();
+  console.log('login', login)
   const [show, setShow] = useState(false);
 
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset} = useForm({
@@ -41,6 +42,7 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
   const handleLogin = async(data) => {
+    console.log('login', login)
     await login(data)
     reset();
   }
