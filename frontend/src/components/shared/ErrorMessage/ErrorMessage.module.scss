@@ -1,10 +1,10 @@
-@import "../../../assets/variables/variables";
+@use "../../../assets/variables/variables";
 .error {
   position: absolute;
   top: 54px;
   color: red;
   left: 5px;
-  font-family: $font-poppins;
+  font-family: variables.$font-poppins;
   font-size: 11px;
   font-weight: 500;
 }
@@ -16,7 +16,7 @@
   top: 24px;
   color: red;
   left: 5px;
-  font-family: $font-poppins;
+  font-family: variables.$font-poppins;
   font-size: 11px;
   font-weight: 500;
 }

@@ -1,8 +1,8 @@
-@import "../../../assets/variables/variables";
+@use "../../../assets/variables/variables";
 .main_container {
   display: flex;
   .rightSideContainer {
-    width: 100%;
+    flex: 1;
     position: relative;
     height: 100vh;
     overflow-y: hidden;
@@ -26,7 +26,7 @@
       }
 
       &::-webkit-scrollbar-thumb {
-        background: $primary-color; /* Color of the scrollbar thumb */
+        background: variables.$primary-color; /* Color of the scrollbar thumb */
         border-radius: 10px; /* Rounded corners */
         border: 3px solid transparent; /* Adds space around the thumb */
         background-clip: padding-box; /* To show the transparent border */

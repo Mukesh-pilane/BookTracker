@@ -4,13 +4,13 @@ import { combineClasses } from '../../../utility';
 
 const Buttons = ({
     onClick,
-    content,
     width = '100%',
     height = 'auto',
     borderRadius = '6px',
     padding = '10px 90px',
     style,
     theme = "primary",
+    children,
 }) => {
     return (
         <button
@@ -19,7 +19,7 @@ const Buttons = ({
             type='submit'
             style={{ width, height, borderRadius, padding, ...style }}
         >
-            {content}
+            {children}
         </button>
     );
 };

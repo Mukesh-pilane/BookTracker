@@ -1,6 +1,6 @@
-@import "../../../assets/variables/variables";
+@use "../../../assets/variables/variables";
 .button {
-  background-color: $primary-color;
+  background-color: variables.$primary-color;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,11 +9,11 @@
   border-radius: 6px;
   padding: 10px 90px;
   width: 100%;
-  font-family: $font-family-inter;
+  font-family: variables.$font-family-inter;
   font-weight: 500;
 }
 .button2 {
-  background-color: $cancel-color;
+  background-color: variables.$cancel-color;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,6 +22,6 @@
   border-radius: 6px;
   padding: 10px 90px;
   width: 100%;
-  font-family: $font-family-inter;
+  font-family: variables.$font-family-inter;
   font-weight: 500;
 }

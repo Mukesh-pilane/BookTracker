@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { useNavigate } from "react-router";
 // form
 import { useForm } from "react-hook-form";
 
@@ -29,22 +29,23 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
-  
-  const { user, login, loading, error } = useAuthStore();
-  console.log('login', login)
-  const [show, setShow] = useState(false);
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset} = useForm({
+  const { login } = useAuthStore();
+  
+
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
     resolver: yupResolver(schema),
   });
-  const handleLogin = async(data) => {
-    console.log('login', login)
-    await login(data)
-    reset();
+  const handleLogin = async (data) => {
+    login(data)
+    navigate('/dashboard')
   }
   return (
     <div className={styles.loginContainer}>
@@ -79,7 +80,7 @@ const Login = () => {
                 {show ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            <Buttons content={isSubmitting ? "Logging in..." : "Login"} />
+            <Buttons>{isSubmitting ? "Logging in..." : "Login"}</Buttons>
           </form>
           <span>Don't have account? </span>
         </div>

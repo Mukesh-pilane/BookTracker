@@ -1,4 +1,4 @@
-@import "../../assets/variables/variables";
+@use "../../assets/variables/variables";
 
 .loginContainer {
     display: flex;
@@ -8,7 +8,7 @@
 
     .left {
         flex: 1;
-        background-color: $primary-color;
+        background-color: variables.$primary-color;
         height: 100%;
     }
 
@@ -39,7 +39,7 @@
                         right: 10px;
                         top: 7px;
                         font-size: 20px;
-                        color: $primary-color;
+                        color: variables.$primary-color;
                     }
                 }
             }

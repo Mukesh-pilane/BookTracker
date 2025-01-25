@@ -1,5 +1,6 @@
 import {
   createBrowserRouter,
+  Navigate,
   RouterProvider,
 } from "react-router-dom";
 
@@ -16,12 +17,16 @@ function App() {
         element: <PublicRoute component={e?.element} />
       }
     }),
+    ...Object.values(paths.hybridRoutes).map(route => ({
+      path: route.path,
+      element: <route.element />,
+    })),
     ...Object.values(paths?.privateRoutes)?.map((e) => {
       return {
         path: e?.path,
         element: <PrivateRoute component={e?.element} />,
         children: [
-          ...Object.values(e?.children[0])?.map((ele) => {
+          ...Object.values(e?.children)?.map((ele) => {
             return {
               path: ele?.path,
               element: <PrivateRoute component={ele?.element} path={ele?.path} />,
@@ -31,12 +36,8 @@ function App() {
       }
     }),
     {
-      path: "/unauthorized",
-      element: <div>no access !!</div>,
-    },
-    {
       path: "*",
-      element: <div>Page not found!!</div>
+      element: <Navigate to={'/errorPage/404'} />
     }
   ]);
 
