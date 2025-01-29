@@ -1,19 +1,28 @@
 import { lazy } from "react"
 const HomeLayout = lazy(() => import("../components/layouts/Homelayout/HomeLayout"))
 const Login = lazy(() => import("../pages/Login/Login"))
+const ForgotPassword = lazy(() => import("../pages/ForgotPassword/ForgotPassword"))
+const Home = lazy(() => import("../pages/Home/Home"))
+const Register = lazy(() => import("../pages/Register/Register"))
 const DashBoard = lazy(() => import("../pages/DashBoard/DashBoard"))
-const Books = lazy(() => import("../pages/Books/Books"))
-const ErrorPage = lazy(() => import("../pages/ErrorPage/ErrorPage"))
 
 export const paths = {
     publicRoutes: {
+        home: {
+            path: "/home",
+            element: Home,
+        },
         login: {
             path: "/login",
             element: Login
         },
+        register: {
+            path: "/register",
+            element: Register
+        },
         forgot: {
             path: "/forgotpassword",
-            element: Login
+            element: ForgotPassword
         },
     },
     privateRoutes: {
@@ -24,18 +33,8 @@ export const paths = {
                 Home: {
                     path: "/dashboard",
                     element: DashBoard,
-                },
-                Books: {
-                    path: "/books",
-                    element: Books,
                 }
             }
         }
-    },
-    hybridRoutes: {
-        errorPage: {
-            path: "/errorPage/:errorId",
-            element: ErrorPage,
-        },
     }
 }

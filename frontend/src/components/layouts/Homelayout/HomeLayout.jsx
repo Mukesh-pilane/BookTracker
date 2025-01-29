@@ -13,6 +13,7 @@ const HomeLayout = () => {
                     <div className={styles?.outlet_content}>
                         <Outlet />
                     </div>
+
                 </div>
             </div>
         </div>

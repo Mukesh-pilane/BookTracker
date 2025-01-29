@@ -41,5 +41,5 @@ export const combineClasses = (...classes) => {
 };
 
 export const getToken = () => {
-  return JSON.parse(localStorage.getItem("authUser"))?.authToken || ""
+  return localStorage?.getItem("token")
 }

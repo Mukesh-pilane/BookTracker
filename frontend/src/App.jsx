@@ -1,8 +1,9 @@
 import {
   createBrowserRouter,
-  Navigate,
   RouterProvider,
 } from "react-router-dom";
+import '@mantine/core/styles.css';
+import { MantineProvider } from '@mantine/core';
 
 import { paths } from './utility/constants';
 
@@ -10,6 +11,7 @@ import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
+
   const router = createBrowserRouter([
     ...Object.values(paths?.publicRoutes)?.map((e) => {
       return {
@@ -17,10 +19,6 @@ function App() {
         element: <PublicRoute component={e?.element} />
       }
     }),
-    ...Object.values(paths.hybridRoutes).map(route => ({
-      path: route.path,
-      element: <route.element />,
-    })),
     ...Object.values(paths?.privateRoutes)?.map((e) => {
       return {
         path: e?.path,
@@ -36,14 +34,20 @@ function App() {
       }
     }),
     {
+      path: "/unauthorized",
+      element: <div>no access !!</div>,
+    },
+    {
       path: "*",
-      element: <Navigate to={'/errorPage/404'} />
+      element: <div>Page not found!!</div>
     }
   ]);
 
   return (
     <>
-      <RouterProvider router={router} />
+      <MantineProvider >
+        <RouterProvider router={router} />
+      </MantineProvider>
     </>
   )
 }

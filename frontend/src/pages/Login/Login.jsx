@@ -1,92 +1,79 @@
-import React, { useState } from 'react'
-import { useNavigate } from "react-router";
-// form
-import { useForm } from "react-hook-form";
+import {
+  Anchor,
+  Button,
+  Checkbox,
+  Group,
+  Paper,
+  PasswordInput,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
+import { z } from 'zod';
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { useForm } from '@mantine/form';
+import classes from './Login.module.scss';
+import { Link } from 'react-router-dom';
 
-// validation
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+const AuthenticationImage = () => {
 
-
-// icons
-import { MdOutlineEmail } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-
-import styles from "./Login.module.scss"
-import { emailRegex } from '../../utility/regex';
-import Input from '../../components/shared/Input/Input'
-import Buttons from '../../components/shared/Buttons/Buttons';
-import useAuthStore from '../../store/authStore';
-
-
-const schema = yup.object().shape({
-  email: yup.string().email().required().matches(
-    emailRegex,
-    'Invalid email format'
-  ),
-  password: yup.string().min(1).max(32).required(),
-});
-
-const Login = () => {
-
-  const { login } = useAuthStore();
+  const schema = z.object({
+    email: z.string().email({ message: 'Invalid email' }),
+    password: z.string().min(6, { message: 'Password must have at least 6 characters' }),
+    termsOfService: z.boolean().refine(val => val === true, {
+      message: 'You must accept the terms of service',
+    }),
+  });
   
 
-  const [show, setShow] = useState(false);
-  const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
-    defaultValues: {
-      email: "",
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: '',
       password: "",
+      termsOfService: false,
     },
-    resolver: yupResolver(schema),
+    validate: zodResolver(schema),
   });
-  const handleLogin = async (data) => {
-    login(data)
-    navigate('/dashboard')
-  }
+
+
+
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.left}>
-      </div>
-      <div className={styles.right}>
-        <div className={styles.formContainer}>
-          <h1>Create an Account</h1>
-          <form onSubmit={handleSubmit(handleLogin)}>
-            <Input
-              onboard={true}
-              name="email"
-              placeholder="Email"
-              register={register}
-              errors={errors}
-              icon={<MdOutlineEmail />}
-              type="text"
-            />
-            <div className={styles?.passwordWrapper}>
-              <Input
-                onboard={true}
-                name="password"
-                placeholder="Password"
-                register={register}
-                errors={errors}
-                icon={<RiLockPasswordFill />}
-                type={
-                  show ? "text" : "password"
-                }
-              />
-              <span onClick={() => setShow(!show)} className={styles?.eye}>
-                {show ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-            <Buttons>{isSubmitting ? "Logging in..." : "Login"}</Buttons>
-          </form>
-          <span>Don't have account? </span>
-        </div>
-      </div>
+    <div className={classes.wrapper}>
+      <Paper component='form' onSubmit={form.onSubmit((values) => console.log(values))} className={classes.form} radius={0} p={30}>
+        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+          Welcome back to BookTracker!
+        </Title>
+
+        <TextInput
+          label="Email address"
+          placeholder="hello@gmail.com"
+          {...form.getInputProps('email')}
+          size="md"
+        />
+        <PasswordInput label="Password" placeholder="Your password" mt="md" size="md"
+          {...form.getInputProps('password')}
+         />
+        <Group justify="space-between" mt="lg">
+          <Checkbox label="Remember me" {...form.getInputProps('termsOfService', { type: 'checkbox' })}/>
+          <Anchor size="sm" component={Link} to="/forgotpassword">
+            Forgot password?
+          </Anchor>
+        </Group>
+        <Button fullWidth mt="xl" size="md" type="submit">
+          Login
+        </Button>
+
+        <Text ta="center" mt="md">
+          Don&apos;t have an account?{' '}
+          <Anchor component={Link} to="/register" fw={700}>
+            Register
+          </Anchor>
+        </Text>
+      </Paper>
     </div>
-  )
+  );
 }
 
-export default Login
+export default AuthenticationImage
