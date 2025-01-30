@@ -5,6 +5,7 @@ const ForgotPassword = lazy(() => import("../pages/ForgotPassword/ForgotPassword
 const Home = lazy(() => import("../pages/Home/Home"))
 const Register = lazy(() => import("../pages/Register/Register"))
 const DashBoard = lazy(() => import("../pages/DashBoard/DashBoard"))
+const Books = lazy(() => import("../pages/Books/Books"))
 
 export const paths = {
     publicRoutes: {
@@ -29,10 +30,17 @@ export const paths = {
         home: {
             path: "/",
             element: HomeLayout,
+            pageName: "Dashboard",
             children: {
                 Home: {
                     path: "/dashboard",
                     element: DashBoard,
+                    pageName: "Dashboard"
+                },
+                Books: {
+                    path: "/books",
+                    element: Books,
+                    pageName: "Books"
                 }
             }
         }

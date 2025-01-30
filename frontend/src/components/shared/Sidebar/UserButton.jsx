@@ -1,0 +1,30 @@
+import { IconChevronRight } from '@tabler/icons-react';
+import { IconUserHexagon } from '@tabler/icons-react';
+
+import { Group, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
+import classes from './UserButton.module.css';
+import { useAuthStore } from '../../../store/client/authStore';
+
+export default function UserButton() {
+  const { userData } = useAuthStore((state) => state);
+
+  return (
+    <UnstyledButton className={classes.user}>
+      <Group className={classes.group}>
+        <ThemeIcon variant="light" size={30}>
+          <IconUserHexagon stroke={2} />
+        </ThemeIcon>
+        <div style={{ flex: 1 }}>
+          <Text size="sm" fw={500}>
+            {userData?.email?.split("@")[0]}
+          </Text>
+          <Text color="dimmed" size="xs">
+            {userData?.email}
+          </Text>
+        </div>
+
+        <IconChevronRight size={14} stroke={1.5} />
+      </Group>
+    </UnstyledButton>
+  );
+}

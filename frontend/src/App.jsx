@@ -3,7 +3,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider,createTheme } from '@mantine/core';
 
 import { paths } from './utility/constants';
 
@@ -12,6 +12,11 @@ import PrivateRoute from './routes/PrivateRoute';
 import queryClient from "./queryClient";
 import { QueryClientProvider } from "react-query";
 import { ToastContainer } from 'react-toastify';
+
+const theme = createTheme({
+  fontFamily: 'Open Sans, sans-serif',
+  primaryColor: 'yellow',
+});
 
 function App() {
 
@@ -26,11 +31,17 @@ function App() {
       return {
         path: e?.path,
         element: <PrivateRoute component={e?.element} />,
+        handle: {
+          pageName: e.pageName
+        },
         children: [
           ...Object.values(e?.children)?.map((ele) => {
             return {
               path: ele?.path,
               element: <PrivateRoute component={ele?.element} path={ele?.path} />,
+              handle: {
+                pageName: e.pageName
+              },
             }
           })
         ]
@@ -51,10 +62,10 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <MantineProvider >
+        <MantineProvider theme={theme}>
           <RouterProvider router={router} />
-          <ToastContainer />
         </MantineProvider>
+        <ToastContainer />
       </QueryClientProvider>
     </>
   )

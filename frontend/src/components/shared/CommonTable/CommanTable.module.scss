@@ -1,0 +1,79 @@
+@import '../../../assets/variables/variables';
+
+.noData {
+  margin-top: 50px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.table_maincontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .table {
+    height: calc(100vh - 23rem) !important;
+    border-radius: 20px 20px 0 0;
+    background-color: white;
+    overflow-y: auto !important;
+    transition: all ease 300ms;
+    @media screen and (max-width: $mobile-screen-width) {
+      height: calc(100vh - 26rem) !important;
+    }
+    
+    :global {
+      .rdt_Table {
+        background: none;
+      }
+
+      .rdt_TableCell {
+        overflow: visible;
+      }
+
+      .rdt_TableHeadRow {
+        color: #0b0e1d;
+        font-size: 1.4rem; // Adjust the font size here
+        border-bottom: 1px solid yellow;
+        font-weight: 600;
+        font-family: myBold;
+        padding: 0 8px;
+      }
+
+      .rdt_TableRow {
+        border-bottom: 1px solid yellow !important;
+        font-size: 12px; // Adjust the font size here
+        color: #333333; // Adjust the text color here
+        padding: 0 4px;
+        // overflow-y: auto;
+        // overflow-x: hidden;
+        min-height: 35px;
+
+        overflow: visible;
+        &:last-child {
+          border-bottom: 1px solid transparent !important;
+        }
+      }
+
+
+      .rdt_TableHead {
+        z-index: 3;
+        padding: 0px !important;
+      }
+
+      .rdt_TableBody {
+        border-radius: 0 0 10px 10px !important;
+        
+        &::-webkit-scrollbar {
+          width: 5px;
+          height: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: yellow;
+          border-radius: 3px;
+        }
+
+      }
+    }
+  }
+}

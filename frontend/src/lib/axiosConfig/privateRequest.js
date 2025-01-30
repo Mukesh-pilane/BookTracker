@@ -1,19 +1,15 @@
 import axios from "axios";
-import { showErrorNotification } from "../../utility/index";
+import { getToken, showErrorNotification } from "../../utility/index";
 
 // Step-1: Create a new Axios instance with a custom config.
 // The timeout is set to 20s. If the request takes longer than
 // that then the request will be aborted.
 export const privateRequest = axios.create({
   timeout: 20000,
-  baseURL: process.env.REACT_APP_BACKEND_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
 });
 
-const getToken = () => {
-  if (localStorage.getItem("authUser") !== null) {
-    return JSON.parse(localStorage.getItem("authUser")).token;
-  }
-};
+
 
 // Step-2: Create request, response & error handlers
 const requestHandler = (request) => {

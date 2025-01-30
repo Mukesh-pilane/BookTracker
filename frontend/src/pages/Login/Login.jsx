@@ -16,7 +16,7 @@ import classes from './Login.module.scss';
 import { Link } from 'react-router-dom';
 import { loginUser } from '../../store/server/services/authService';
 import { useAuthStore } from '../../store/client/authStore';
-import { persistToken, setUserData } from '../../utility';
+import { persistToken, setUserData, showErrorNotification } from '../../utility';
 import { toast } from 'react-toastify';
 
 const Login = () => {
@@ -46,7 +46,7 @@ const Login = () => {
       setUserData({ email: values.email })
       setAuth({ isAuthenticated: true, email: values.email });
     } catch (error) {
-      toast.error(error.response.data.message || "Invalid Credentials")
+      showErrorNotification(error.response.data.message || "Invalid Credentials")
     }
   };
 
