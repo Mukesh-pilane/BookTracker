@@ -1,12 +1,11 @@
 import React from 'react';
-import { getToken } from "../utility";
 import { Navigate } from 'react-router-dom';
+import { useAuthStore } from '../store/client/authStore';
 
 const PrivateRoute = ({ component: Component }) => {
-    const token = getToken();
+    const { isAuthenticated } = useAuthStore((state) => state);
 
-    // If the token is not present, navigate to the login page
-    if (!token) {
+    if (!isAuthenticated) {
         return <Navigate to={"/login"} />;
     }
     return <Component />;

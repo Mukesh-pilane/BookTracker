@@ -9,6 +9,9 @@ import { paths } from './utility/constants';
 
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
+import queryClient from "./queryClient";
+import { QueryClientProvider } from "react-query";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -43,11 +46,16 @@ function App() {
     }
   ]);
 
+  // 
+
   return (
     <>
-      <MantineProvider >
-        <RouterProvider router={router} />
-      </MantineProvider>
+      <QueryClientProvider client={queryClient}>
+        <MantineProvider >
+          <RouterProvider router={router} />
+          <ToastContainer />
+        </MantineProvider>
+      </QueryClientProvider>
     </>
   )
 }
