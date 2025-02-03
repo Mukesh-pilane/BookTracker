@@ -6,3 +6,7 @@ export const getBooks =  (params) => {
     const query =  getApiQuery(params)
     return  privateRequest.get(BOOK, query);
 };
+
+export const addBook =  (data) => {
+    return  privateRequest.post(BOOK, data);
+};

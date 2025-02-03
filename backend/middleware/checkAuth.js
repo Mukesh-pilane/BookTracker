@@ -6,16 +6,16 @@ const response = require('../utils/response');
 
 
 
-module.exports = async (req, res, next)=> {
+module.exports = async (req, res, next) => {
     try {
         let token = req.headers.authorization;
-        if(!token){
+        if (!token) {
             return response.unauthorized(res);
         }
         token = token.split(' ')[1];
         //if token is present in the database now decode the token
         const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
-        if(!decoded.userid){
+        if (!decoded.userid) {
             return response.unauthorized(res);
         }
 
@@ -23,26 +23,23 @@ module.exports = async (req, res, next)=> {
         const decode = jwt.verify(token, process.env.PRIVATE_KEY);
 
         if (redisToken) {
-            console.log("JWT Token found in Redis");
             if (decode) { // raw query implementation
                 let userData = await db.user.findOne({
-                    _id : decoded.userid
+                    _id: decoded.userid
                 });
-                if(!userData){
+                if (!userData) {
                     return response.noData(res);
                 };
-                req.userData = {id : userData.id, email : userData.email };
+                req.userData = { id: userData.id, email: userData.email };
                 return next();
-            } 
+            }
             else {
-              console.log("Invalid token in Redis");
-              return response.unauthorized(res);
+                return response.unauthorized(res);
             }
         }
 
         // set the token into the redis
         await client.setEx(token, 3600, JSON.stringify(decode));
-        console.log("setted redis token");
 
         // check if the userid and token is present in the database or not.\
         const check = await db.userToken.findOne({
@@ -52,18 +49,24 @@ module.exports = async (req, res, next)=> {
         if (!check) {
             return response.unauthorized(res);
         }
+
         // find the userdata and add that into request object for further use
-        const userData =await db.user.findOne(
-            { _id : decoded.userid },
-            )
+        const userData = await db.user.findOne(
+            { _id: decoded.userid },
+        )
             .select('id email');
-        if(!userData){
+        if (!userData) {
             return response.noData(res);
         };
-        req.userData = {id : userData._id, email : userData.email};
+        req.userData = { id: userData._id, email: userData.email };
         next();
     }
-    catch(err){
+    catch (err) {
+        if (err.name === 'TokenExpiredError') {
+            return response.unauthorized(res, 'Token has expired');
+        }
+
+
         next(err);
     }
 }

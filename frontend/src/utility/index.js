@@ -33,7 +33,7 @@ export const persistToken = (token) => {
 };
 
 export const clearToken = () => {
-  localStorage.removeItem("to ken");
+  localStorage.removeItem("token");
 };
 
 export const getToken = () => {

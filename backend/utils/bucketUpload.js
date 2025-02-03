@@ -2,25 +2,28 @@ const { ref, uploadBytes, getDownloadURL } = require('firebase/storage');
 const storage = require('../config/firebase');
 
 module.exports = async (req, res, next) => {
-  const file = req.files['file'] ? req.files['file'][0] : null; 
-
+  const file = req.files['file'] ? req.files['file'][0] : null;
+  const image = req.files['image'] ? req.files['image'][0] : null;
 
   // Check if file is uploaded
-  if (!file) {
+  if (!file && !image) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
 
   try {
     // Perform file upload to Firebase Storage
-    const storageRef = ref(storage, `books/${file.originalname}`);
-    const uploadResult = await uploadBytes(storageRef, file.buffer);
+    const fileStorageRef = ref(storage, `books/${file.originalname}`);
+    const fileUploadResult = await uploadBytes(fileStorageRef, file.buffer);
+    const fileDownloadURL = await getDownloadURL(fileUploadResult.ref);
 
-    // Get the download URL after uploading
-    const downloadURL = await getDownloadURL(uploadResult.ref);
-    console.log('File available at:', downloadURL);
+
+    const imageStorageRef = ref(storage, `books/images/${image.originalname}`);
+    const imageUploadResult = await uploadBytes(imageStorageRef, image.buffer);
+    const imageDownloadURL = await getDownloadURL(imageUploadResult.ref);
 
     // Attach the file URL to the request object
-    req.fileUrl = downloadURL;
+    req.fileUrl = fileDownloadURL;
+    req.imageUrl = imageDownloadURL;
 
     // Move to the next middleware (createBook)
     next();

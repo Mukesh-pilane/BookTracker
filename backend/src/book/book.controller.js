@@ -1,5 +1,5 @@
 const response = require('../../utils/response');
-const { addBook, getAllbooksOfUser, searchBooksOfUser, updateBook } = require('./book.service');
+const { addBook, searchBooksOfUser, updateBook } = require('./book.service');
 
 module.exports.createBook = async (req, res) => {
     const { name, author, categoryId } = req.body;
@@ -15,12 +15,6 @@ module.exports.editBook = async (req, res) => {
     const { bookId } = req.params;
     const { name, author, categoryId } = req.body;
     const result = await updateBook(userId, bookId, { name, author, categoryId  });
-    return response.ok(res, result);
-}
-
-module.exports.getAllbookByUser = async (req, res) => {
-    const userId = req.userData.id;
-    const result = await getAllbooksOfUser(userId);
     return response.ok(res, result);
 }
 

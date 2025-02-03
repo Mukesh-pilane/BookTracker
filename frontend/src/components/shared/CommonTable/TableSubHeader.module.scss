@@ -1,0 +1,30 @@
+.container {
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    background-color: var(--mantine-color-body);
+    border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    border-radius: 10px;
+    justify-content: flex-end;
+
+    :global {
+        .mantine-TextInput-input {
+            background-color: rgb(219, 209, 209);
+            outline: none;
+            border: none;
+            color: white;
+    
+            &:focus,
+            &:active {
+                outline: none;
+                border: none;
+            }
+    
+            &::placeholder {
+                color: white;
+            }
+        }
+    }
+}

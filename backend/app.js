@@ -37,7 +37,6 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // Set the response status
   res.status(err.status || err.statusCode || 500);
-  console.log(err.message)
   // Send the error message as a JSON response
   res.json({
     status: err.status || err.statusCode || 500,

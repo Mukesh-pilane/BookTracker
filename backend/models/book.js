@@ -24,7 +24,11 @@ const bookSchema = new Schema(
         fileUrl: {
             type: String,
             required: true,
-        }
+        },
+        imageUrl: {
+            type: String,
+            required: true,
+        },
     },
     {
         timestamps: true,

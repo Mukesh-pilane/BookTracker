@@ -4,12 +4,16 @@ import { Loader } from '@mantine/core';
 
 import Styles from './CommanTable.module.scss';
 import { combineClasses } from '../../../utility';
+import TableSubHeader from './TableSubHeader';
 // import PaginationComponent from "../Pagination/PaginationComponent"
 
 
-const CommonTable = ({ columns, data, className, paginationProps, isLoading }) => {
+
+
+const CommonTable = ({ columns, data, className, paginationProps, isLoading, tableSubHeaderProps }) => {
   return (
     <div className={Styles.table_maincontainer} style={{ height: "100%" }}>
+      <TableSubHeader  {...tableSubHeaderProps} />
       <DataTable
         progressPending={isLoading}
         noDataComponent={<p className={Styles.noData}>There are no records to display</p>}

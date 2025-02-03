@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getToken, showErrorNotification } from "../../utility/index";
+import { clearToken, getToken, showErrorNotification } from "../../utility/index";
 
 // Step-1: Create a new Axios instance with a custom config.
 // The timeout is set to 20s. If the request takes longer than
@@ -25,11 +25,7 @@ const responseHandler = (response) => {
 };
 
 const errorHandler = (error) => {
-  // if (error.response.status === 401) {
-  //     window.location = '/';
-  //     localStorage.removeItem("authUser")
-  // }
-  // showErrorNotification(error.response.data.message)
+ 
   return Promise.reject(error);
 };
 
@@ -43,7 +39,7 @@ const responseErrorHandler = (error) => {
         showErrorNotification("Token Expired! Please Login again")
         setTimeout(() => {
           window.location = '/';
-          localStorage.removeItem("authUser")
+          clearToken()
         }, 1000)
         break;
       case 400:

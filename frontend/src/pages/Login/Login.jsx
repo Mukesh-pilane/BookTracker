@@ -17,7 +17,6 @@ import { Link } from 'react-router-dom';
 import { loginUser } from '../../store/server/services/authService';
 import { useAuthStore } from '../../store/client/authStore';
 import { persistToken, setUserData, showErrorNotification } from '../../utility';
-import { toast } from 'react-toastify';
 
 const Login = () => {
   const { setAuth } = useAuthStore((state) => state);

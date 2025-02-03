@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import styles from './PaginationComponent.module.scss';
 // import ReactPaginate from 'react-paginate';
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
+import { Pagination } from '@mantine/core';
 
 const PaginationComponent = ({ currentPage, totalCount, rowsPerPageValue, onPageChange, onRowsChange }) => {
     const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageValue);
@@ -45,23 +46,10 @@ const PaginationComponent = ({ currentPage, totalCount, rowsPerPageValue, onPage
                     </select>
                 </div>
             </div>
+             */}
             <div className={styles.paginationRightSide}>
-
-                <ReactPaginate
-                    breakLabel="..."
-                    previousLabel={<div className={styles.arrow}><IoMdArrowDropleft size={15} /></div>}
-                    nextLabel={<div className={styles.arrow}><IoMdArrowDropright size={15} /></div>}
-                    pageCount={noOfPages}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={2}
-                    onPageChange={handlePageClick}
-                    containerClassName={styles.paginationContainer}
-                    activeClassName={styles.activePage}
-                    disabledClassName={styles.disabled}
-                    pageClassName={styles.page}
-                    forcePage={currentPage - 1}
-                />
-            </div> */}
+                <Pagination total={10} />;
+            </div>
         </div>
     );
 };

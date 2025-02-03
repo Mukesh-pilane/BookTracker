@@ -1,11 +1,15 @@
 const db = require('../../models/index');
+const { toObjectId } = require('../../utils/toObjectId');
 
-exports.addBook = async (userId, name, author, fileUrl, categoryId) => {
+
+exports.addBook = async (userId, name, author, fileUrl, imageUrl, categoryId) => {
+  console.log(userId, name, author, fileUrl, imageUrl, categoryId)
   const data = await db.book.create({
     userId,
     name,
     author,
     fileUrl,
+    imageUrl,
     categoryId
   });
   return {
@@ -18,8 +22,8 @@ exports.addBook = async (userId, name, author, fileUrl, categoryId) => {
 exports.updateBook = async (userId, bookId, updatedData) => {
   // Find the category by categoryId and userId
   const existingBook = await db.book.findOne({
-      _id: bookId,
-      userId: userId
+    _id: bookId,
+    userId: userId
   });
 
   // Check if the category exists
@@ -47,21 +51,12 @@ exports.updateBook = async (userId, bookId, updatedData) => {
 };
 
 
-exports.getAllbooksOfUser = async (userId) => {
-  const data = await db.book.find({ userId: userId })
-    .populate("categoryId")
-  return {
-    data: data,
-    error: false,
-    result: 'books fetched successfull'
-  }
-}
 
 exports.searchBooksOfUser = async (userId, filters = {}) => {
   let query = {};
 
-  query.userId = userId; // Filter by userId (utilizing the index)
-  
+  query.userId = toObjectId(userId); // Ensure it's an ObjectId
+
   // Apply filters based on the provided criteria
   if (filters.categoryId) {
     query.categoryId = filters.categoryId;
@@ -74,7 +69,35 @@ exports.searchBooksOfUser = async (userId, filters = {}) => {
   }
 
   // Fetch the filtered books
-  const data = await db.book.find(query);
+  const data = await db.book.aggregate([
+    { $match: query },  // Match the query if needed
+    {
+      $lookup: {
+        from: "category",  // The collection you want to join (assuming 'categories' is the name of the category collection)
+        localField: "categoryId",  // The field from the current collection (book) that references the 'categories' collection
+        foreignField: "_id",  // The field in the 'categories' collection that the localField references
+        as: "categoryData"  // Alias for the result of the join
+      }
+    },
+    {
+      $unwind: "$categoryData"  // Unwind to flatten the categoryData array into a single object
+    },
+    {
+      $project: {
+        id: 1,
+        userId: 1,
+        category: "$categoryData.category",  // Rename 'categoryId' to 'category' and select the 'category' field
+        categoryId: "$categoryData._id",
+        name: 1,
+        author: 1,
+        fileUrl: 1,
+        createdAt: 1,
+        updatedAt: 1,
+      }
+    }
+  ]);
+
+
   return {
     data: data,
     error: false,
