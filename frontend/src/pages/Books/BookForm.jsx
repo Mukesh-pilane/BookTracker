@@ -139,7 +139,7 @@ const BookForm = ({ data }) => {
                     <Center>
                         <Image
                             radius="md"
-                            width="69%"
+                            w="69%"
                             src={filePreview} alt="First page of the PDF" />
                     </Center>
                 )}

@@ -6,7 +6,8 @@ module.exports.createBook = async (req, res) => {
 
     const userId = req.userData.id;
     const fileUrl = req.fileUrl
-    const result = await addBook(userId, name, author, fileUrl, categoryId);
+    const imageUrl = req.imageUrl
+    const result = await addBook(userId, name, author, fileUrl,imageUrl, categoryId);
     return response.ok(res, result);
 }
 

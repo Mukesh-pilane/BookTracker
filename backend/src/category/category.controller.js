@@ -10,8 +10,9 @@ module.exports.createCategory = async (req, res) => {
 
 
 module.exports.fetchCategory = async (req, res) => {
+    const { name, pageNo, perPage, sort, search} = req.params;
     const userId = req.userData.id;
-    const result = await getAllCategory(userId);
+    const result = await getAllCategory(userId, name, pageNo, perPage, sort, search);
     return response.ok(res, result);
 }
 

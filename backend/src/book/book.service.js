@@ -3,7 +3,6 @@ const { toObjectId } = require('../../utils/toObjectId');
 
 
 exports.addBook = async (userId, name, author, fileUrl, imageUrl, categoryId) => {
-  console.log(userId, name, author, fileUrl, imageUrl, categoryId)
   const data = await db.book.create({
     userId,
     name,
@@ -91,6 +90,7 @@ exports.searchBooksOfUser = async (userId, filters = {}) => {
         name: 1,
         author: 1,
         fileUrl: 1,
+        imageUrl:1,
         createdAt: 1,
         updatedAt: 1,
       }
