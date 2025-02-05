@@ -8,10 +8,15 @@ import { zodResolver } from 'mantine-form-zod-resolver';
 import { useAddBookMutation } from '../../store/server/queries/booksQuery';
 
 import { pdfjs } from 'react-pdf';
-
+import AsyncSelect from '../../components/shared/AsyncSelect/AsyncSelect';
+import { getCategory } from '../../store/server/services/categoryService';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-const BookForm = ({ data }) => {
 
+
+
+
+const BookForm = ({ data }) => {
+    
     const { mutate: addBookMutation, isError, error } = useAddBookMutation();
     const [filePreview, setFilePreview] = useState(null);
 
@@ -50,6 +55,15 @@ const BookForm = ({ data }) => {
         }
     };
 
+    const loadCategoryOptions = (query) => {
+        return getCategory({ search: query }).then((response) => {
+          const result = response.data.data || [];
+          return result.map(ele=>({
+                value: ele?.category,
+                key: ele._id
+          }))
+        })
+      }
     const renderFirstPage = (file) => {
         const fileReader = new FileReader();
         fileReader.onload = async function () {
@@ -118,8 +132,9 @@ const BookForm = ({ data }) => {
                     />
                 </Group>
                 <Group justify="space-between" grow>
-                    <Select
+                    <AsyncSelect
                         label="Select Catgeory"
+                        loadOptions={loadCategoryOptions}
                         {...form.getInputProps('categoryId')}
                         placeholder="Pick Category"
                         data={['React', 'Angular', 'Vue', 'Svelte']}

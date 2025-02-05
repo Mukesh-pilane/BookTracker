@@ -4,7 +4,7 @@ import { getApiQuery } from "../../../utility/getApiQuery";
 
 export const getCategory =  (params) => {
     const query =  getApiQuery(params)
-    return  privateRequest.get(CATEGORY, query);
+    return  privateRequest.get(`${CATEGORY}${query}`, );
 };
 
 export const addCategory =  (data) => {

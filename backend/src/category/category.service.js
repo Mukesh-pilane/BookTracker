@@ -17,11 +17,13 @@ exports.addCategory = async (userId, category) => {
 exports.getAllCategory = async (userId, pageNo = 1, perPage = 10, sort = { createdAt: -1 }, searchQuery = '') => {
   try {
     // Build the search query if provided (case-insensitive)
-    let matchConditions = { userId:toObjectId(userId)};
-    
+    let matchConditions = { userId: toObjectId(userId) };
+
     if (searchQuery) {
       matchConditions.category = { $regex: searchQuery, $options: 'i' };  // Case-insensitive search
     }
+
+    console.log('searchQuery', searchQuery)
 
     // Pagination (skip and limit)
     const skip = (pageNo - 1) * perPage;
@@ -41,9 +43,9 @@ exports.getAllCategory = async (userId, pageNo = 1, perPage = 10, sort = { creat
         },
       },
       {
-        $unwind: { 
-          path: '$userDetails', 
-          // preserveNullAndEmptyArrays: true, // If no matching user, category will still appear
+        $unwind: {
+          path: '$userDetails',
+          preserveNullAndEmptyArrays: true, // If no matching user, category will still appear
         },
       },
       {
@@ -74,9 +76,8 @@ exports.getAllCategory = async (userId, pageNo = 1, perPage = 10, sort = { creat
         totalCount: 0
       };
     }
-
     return {
-      data: data[0].categories, // Return categories
+      data: data[0].result, // Return categories
       error: false,
       totalCount: data[0].totalCount || 0, // Total count for pagination
       result: 'Categories fetched successfully',
@@ -94,8 +95,8 @@ exports.getAllCategory = async (userId, pageNo = 1, perPage = 10, sort = { creat
 exports.updateCategory = async (userId, categoryId, updatedData) => {
   // Find the category by categoryId and userId
   const existingCategory = await db.category.findOne({
-      _id: categoryId,
-      userId: userId
+    _id: categoryId,
+    userId: userId
   });
 
   // Check if the category exists

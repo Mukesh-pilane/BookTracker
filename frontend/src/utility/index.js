@@ -70,3 +70,17 @@ export const useRouteMetadata = () => {
   const route = matches[matches.length - 1];  // Get the last matched route
   return route?.handle?.pageName;  // Assuming permissionName is stored in handle
 }
+
+
+export function debouncePromise(fn, delay) {
+  let timeout;
+  
+  return function(...args) {
+    return new Promise((resolve, reject) => {
+      clearTimeout(timeout); // Clear any existing timeout
+      timeout = setTimeout(() => {
+        fn(...args).then(resolve).catch(reject);
+      }, delay);
+    });
+  };
+}
