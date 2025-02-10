@@ -1,13 +1,14 @@
-import { Button, Flex, Paper } from '@mantine/core'
+import { Button, Checkbox, Flex, Paper, Menu, Stack } from '@mantine/core'
 import React, { useState } from 'react'
-import { IconSearch } from '@tabler/icons-react';
+import { IconFilterSearch } from '@tabler/icons-react';
 import { IconCirclePlus } from '@tabler/icons-react';
 import { TextInput } from '@mantine/core';
 import styles from "./TableSubHeader.module.scss"
 
-const TableSubHeader = ({ setSearch, buttonText, open }) => {
+const TableSubHeader = ({ setSearch, buttonText, searchFilters, setSearchFilters, searchFilterOptions, open }) => {
 
   const [input, setInput] = useState("");
+
   const handleOnchange = (e) => {
     setInput(e.target.value);
     if (e.target.value.length >= 1) {
@@ -24,7 +25,25 @@ const TableSubHeader = ({ setSearch, buttonText, open }) => {
       <Flex size="lg" gap={"1rem"}>
         <TextInput
           placeholder="Search"
-          rightSection={<IconSearch size={18} color='white'/>}
+          rightSection={
+            <Menu shadow="md">
+              <Menu.Target>
+                <IconFilterSearch size={18} color='white' />
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Checkbox.Group
+                  value={searchFilters}
+                  onChange={setSearchFilters}
+                >
+                  <Stack mt="xs">
+                    {searchFilterOptions.map(key => (
+                      <Checkbox key={key} value={key} label={key} />
+                    ))}
+                  </Stack>
+                </Checkbox.Group>
+              </Menu.Dropdown>
+            </Menu>
+          }
           value={input}
           onChange={handleOnchange}
           className={styles.searchInput}
@@ -32,7 +51,6 @@ const TableSubHeader = ({ setSearch, buttonText, open }) => {
         <Button
           leftSection={<IconCirclePlus size={18} />}
           onClick={open}
-        // variant="default"
         >
           {buttonText || "Add"}
         </Button>

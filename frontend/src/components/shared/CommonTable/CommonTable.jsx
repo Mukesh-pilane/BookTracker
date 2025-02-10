@@ -5,7 +5,7 @@ import { Loader } from '@mantine/core';
 import Styles from './CommanTable.module.scss';
 import { combineClasses } from '../../../utility';
 import TableSubHeader from './TableSubHeader';
-// import PaginationComponent from "../Pagination/PaginationComponent"
+import PaginationComponent from "../Pagination/PaginationComponent"
 
 
 
@@ -25,7 +25,7 @@ const CommonTable = ({ columns, data, className, paginationProps, isLoading, tab
         fixedHeader={true}
         className={combineClasses(Styles.table, className || '')}
       />
-      {/* {paginationProps?.isPagination && paginationProps?.totalCount > 0 && (
+      {paginationProps?.isPagination && paginationProps?.totalCount > 0 && (
         <PaginationComponent
           currentPage={paginationProps.currentPage}
           totalCount={paginationProps.totalCount}
@@ -33,7 +33,7 @@ const CommonTable = ({ columns, data, className, paginationProps, isLoading, tab
           onPageChange={paginationProps.setPageSelected}
           onRowsChange={paginationProps.setRowsPerPageValue}
         />
-      )} */}
+      )}
     </div>
   );
 };

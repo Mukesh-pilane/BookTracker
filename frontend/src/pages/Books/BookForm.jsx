@@ -4,7 +4,6 @@ import { useForm } from '@mantine/form';
 import React, { useState } from 'react'
 import { z } from 'zod';
 import { zodResolver } from 'mantine-form-zod-resolver';
-// import * as pdfjsLib from 'pdfjs-dist/webpack';
 import { useAddBookMutation } from '../../store/server/queries/booksQuery';
 
 import { pdfjs } from 'react-pdf';
@@ -16,9 +15,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 
 const BookForm = ({ data }) => {
-    
+
     const { mutate: addBookMutation, isError, error } = useAddBookMutation();
-    const [filePreview, setFilePreview] = useState(null);
+    const [filePreview, setFilePreview] = useState(data._id ? data.imageUrl : null);
 
     const schema = z.object({
         name: z.string().min(5, { message: 'Must have at least 5 characters' }),
@@ -36,7 +35,7 @@ const BookForm = ({ data }) => {
 
     const form = useForm({
         mode: 'uncontrolled',
-        initialValues: {
+        initialValues: data._id ? data : {
             name: '',
             author: "",
             categoryId: "679ead3169900db4a6c441ca",
@@ -57,13 +56,14 @@ const BookForm = ({ data }) => {
 
     const loadCategoryOptions = (query) => {
         return getCategory({ search: query }).then((response) => {
-          const result = response.data.data || [];
-          return result.map(ele=>({
+            const result = response.data.data || [];
+            return result.map(ele => ({
                 value: ele?.category,
                 key: ele._id
-          }))
+            }))
         })
-      }
+    }
+
     const renderFirstPage = (file) => {
         const fileReader = new FileReader();
         fileReader.onload = async function () {

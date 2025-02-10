@@ -23,7 +23,6 @@ exports.getAllCategory = async (userId, pageNo = 1, perPage = 10, sort = { creat
       matchConditions.category = { $regex: searchQuery, $options: 'i' };  // Case-insensitive search
     }
 
-    console.log('searchQuery', searchQuery)
 
     // Pagination (skip and limit)
     const skip = (pageNo - 1) * perPage;

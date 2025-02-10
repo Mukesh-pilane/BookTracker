@@ -2,7 +2,7 @@ const express = require("express");
 const checkAuth = require("../../middleware/checkAuth");
 const bucketUpload = require("../../utils/bucketUpload");
 const { errorWrapper } = require("../../utils/errorWrapper");
-const { createBook, getSearchFilter, editBook } = require("./book.controller");
+const { createBook, getBooks, editBook } = require("./book.controller");
 const createBookValidator = require("./validators/createBook.validator");
 const updateBookValidator = require("./validators/updateBook.validator");
 const multer = require('multer');
@@ -18,6 +18,6 @@ router.post('/', checkAuth, upload.fields([
 router.post('/:bookId', checkAuth, updateBookValidator, errorWrapper(editBook));
 
 
-router.get('/', checkAuth, errorWrapper(getSearchFilter));
+router.get('/', checkAuth, errorWrapper(getBooks));
 
 module.exports = router;

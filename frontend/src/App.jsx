@@ -3,8 +3,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import '@mantine/core/styles.css';
-import { MantineProvider,createTheme } from '@mantine/core';
-
+import { MantineProvider, createTheme } from '@mantine/core';
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { paths } from './utility/constants';
 
 import PublicRoute from './routes/PublicRoute';
@@ -12,6 +12,7 @@ import PrivateRoute from './routes/PrivateRoute';
 import queryClient from "./queryClient";
 import { QueryClientProvider } from "react-query";
 import { ToastContainer } from 'react-toastify';
+import { useState } from "react";
 
 const theme = createTheme({
   fontFamily: 'Open Sans, sans-serif',
@@ -19,6 +20,8 @@ const theme = createTheme({
 });
 
 function App() {
+  const [queryClientstate] = useState(() => queryClient); 
+
 
   const router = createBrowserRouter([
     ...Object.values(paths?.publicRoutes)?.map((e) => {
@@ -61,11 +64,12 @@ function App() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClientstate}>
         <MantineProvider theme={theme}>
           <RouterProvider router={router} />
         </MantineProvider>
         <ToastContainer />
+        <ReactQueryDevtools initialIsOpen={true} />
       </QueryClientProvider>
     </>
   )

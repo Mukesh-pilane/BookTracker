@@ -1,5 +1,6 @@
 import axios from "axios";
 import { clearToken, getToken, showErrorNotification } from "../../utility/index";
+import { getApiParams } from "../../utility/getApiParams";
 
 // Step-1: Create a new Axios instance with a custom config.
 // The timeout is set to 20s. If the request takes longer than
@@ -15,6 +16,11 @@ export const privateRequest = axios.create({
 const requestHandler = (request) => {
   // Token will be dynamic so we can use any app-specific way to always
   // fetch the new token before making the call
+
+  if (request.params) {
+    request.params = getApiParams(request.params); // Clean the query parameters
+  }
+
   request.headers.Authorization = `Bearer ${getToken()}`;
   request.headers.ContentType = "multipart/form-data";
   return request;

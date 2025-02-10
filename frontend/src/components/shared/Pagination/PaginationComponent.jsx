@@ -1,16 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styles from './PaginationComponent.module.scss';
 // import ReactPaginate from 'react-paginate';
-import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { Pagination } from '@mantine/core';
 
 const PaginationComponent = ({ currentPage, totalCount, rowsPerPageValue, onPageChange, onRowsChange }) => {
     const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageValue);
     const noOfPages = useMemo(() => Math.ceil(totalCount / rowsPerPage), [rowsPerPage, totalCount]);
-
-    const handlePageClick = (e) => {
-        onPageChange(Number(e.selected) + 1);
-    };
 
     const handleRowsChange = (e) => {
         setRowsPerPage(Number(e.target.value));
@@ -27,7 +22,7 @@ const PaginationComponent = ({ currentPage, totalCount, rowsPerPageValue, onPage
 
     return (
         <div className={styles.pagination}>
-            {/* <div className={styles.paginationLeftSide}>
+            <div className={styles.paginationLeftSide}>
                 <div className={styles.dataRange}>
                     {`${startEntry}-${endEntry} / ${totalCount}`}
                 </div>
@@ -46,9 +41,8 @@ const PaginationComponent = ({ currentPage, totalCount, rowsPerPageValue, onPage
                     </select>
                 </div>
             </div>
-             */}
             <div className={styles.paginationRightSide}>
-                <Pagination total={10} />;
+                <Pagination total={noOfPages} onChange={onPageChange} value={currentPage}/>
             </div>
         </div>
     );

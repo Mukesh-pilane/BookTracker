@@ -5,7 +5,7 @@ import { addBook } from '../services/booksService';
 export const useGetBookQuery = () =>
   useMutation(['books'], async (params) => {
     const res = await getBooks(params);
-    return res.data.data;
+    return {data: res.data.data, totalCount:res.data.totalCount};
   });
 
 

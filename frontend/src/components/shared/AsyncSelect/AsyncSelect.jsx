@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Combobox, Loader, TextInput, useCombobox } from '@mantine/core';
+import { Box, Combobox, Loader, Stack, Text, TextInput, useCombobox } from '@mantine/core';
 
 export default function AsyncSelect({ loadOptions }) {
   const combobox = useCombobox({
@@ -67,18 +67,31 @@ export default function AsyncSelect({ loadOptions }) {
       withinPortal={false}
       store={combobox}
     >
-      <Combobox.Target>
-        <TextInput
-          label="Pick value or type anything"
-          placeholder="Search groceries"
+      <Stack>
+        <Combobox.Target>
+          <Box
+            onClick={() => combobox.openDropdown()}
+            onFocus={() => {
+              combobox.openDropdown();
+              if (data === null) {
+                fetchOptions(value);
+              }
+            }}
+          >{selected}khmjdsncsc</Box>
+        </Combobox.Target>
+     
+      </Stack>
+      <Combobox.Dropdown hidden={data === null}>
+      <TextInput
+          // label="Pick value or type anything"
+          placeholder="Search categories"
           value={selected || value}
           onChange={(event) => {
             setSelected('')
-            setValue(event.currentTarget.value); // Update value immediately
+            setValue(event.currentTarget.value);
             combobox.resetSelectedOption();
             combobox.openDropdown();
           }}
-          onClick={() => combobox.openDropdown()}
           onFocus={() => {
             combobox.openDropdown();
             if (data === null) {
@@ -91,9 +104,6 @@ export default function AsyncSelect({ loadOptions }) {
           }}
           rightSection={loading && <Loader size={18} />}
         />
-      </Combobox.Target>
-
-      <Combobox.Dropdown hidden={data === null}>
         <Combobox.Options>
           {options}
           {empty && <Combobox.Empty>No results found</Combobox.Empty>}
